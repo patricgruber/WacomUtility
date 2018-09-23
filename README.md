@@ -12,6 +12,11 @@ You can also set custom properties in a table.
 * Java JDK8+
 
 # FAQ
+## The MapTo option doesn't work right
+The MapTo setting uses absolute pixel coordinates on your whole display setup.
+
+So if you have two displays and want to map the tablet to an area on the right display, you have to add the width of the left display to the _top left x_ coordinate.
+
 ## What is the option *xy* for? / What options are available?
 Check ``xsetwacom list parameters``
 
