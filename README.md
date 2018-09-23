@@ -26,7 +26,18 @@ Check ``xsetwacom list parameters``
 Check [Linux Wacom Project](https://linuxwacom.github.io/)
 
 ## What are the best options for osu! ?
-I recommend ``RawSample 1`` and ``Suppress 0`` 
+Depends on your playstyle.
+
+You can try the following settings, but it is not guaranteed that they'll work for you.
+
+| Area | Grip | RawSample | Suppress |
+| ---- | ---- | --------- | -------- |
+| Full Area | Dragging | 1 | 0 |
+| Full Area | Hovering | 1/2 | 1/0 |
+| Half Area | Dragging | 1 | 1 |
+| Half Area | Hovering | 1/2 | 1/1 |
+| Small Area | Dragging | 2/3 | 2/1 |
+| Small Area | Hovering | 4 | 2 |
 
 # Tested with
 * __OS__: Manjaro Linux 64bit
