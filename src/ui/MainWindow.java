@@ -117,8 +117,7 @@ public class MainWindow extends javax.swing.JFrame {
         Settings.set("Touch", touchCB.isSelected()+"");
         Settings.set("Area", areaX.getText()+" "+areaY.getText()+" "
                 +areaWidth.getText()+" "+areaHeight.getText());
-        Settings.set("MapToOutput", mappedX.getText()+" "+mappedY.getText()+" "
-                +mappedWidth.getText()+" "+mappedHeight.getText());
+        Settings.set("MapToOutput", mappedWidth.getText()+"x"+mappedHeight.getText()+"+"+mappedX.getText()+"+"+mappedY.getText());
         
         final DefaultTableModel tm = (DefaultTableModel)customPropertyTable.getModel();        
         for (int i=0;i<tm.getRowCount();i++) {
