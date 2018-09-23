@@ -77,6 +77,8 @@ public class SystemInterface {
         } catch (IOException ioe) {
             out = "";
         }
+        
+        if (out.trim().length() == 0) return tabletNames;
 
         String[] lines = out.split("\n");
         for (String line : lines) {
