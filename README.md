@@ -7,6 +7,8 @@ You can set the tablet area, the output area and if touch is enabled.
 
 You can also set custom properties in a table.
 
+This tool is still pre-alpha.
+
 # Dependencies
 * xsetwacom
 * Java JDK8+
