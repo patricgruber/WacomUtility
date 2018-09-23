@@ -83,7 +83,7 @@ public class SystemInterface {
             tabletNames.add(line.split("id")[0].trim());
         }            
         
-        return new ArrayList<>();
-        //return tabletNames;
+        //return new ArrayList<>();
+        return tabletNames;
     }
 }
