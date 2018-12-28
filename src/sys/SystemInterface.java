@@ -3,15 +3,10 @@ package sys;
 import general.Settings;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.security.KeyException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- *
- * @author patric
- */
 public class SystemInterface {
     private final static Runtime rt = Runtime.getRuntime();
     
@@ -85,7 +80,6 @@ public class SystemInterface {
             tabletNames.add(line.split("id")[0].trim());
         }            
         
-        //return new ArrayList<>();
         return tabletNames;
     }
 }

@@ -1,9 +1,5 @@
 package general;
 
-/**
- *
- * @author patric
- */
 public class Constants {
     public final static String USER_DIR = System.getProperty("user.home");
     public final static String DEFAULT_SETTINGS_PATH = 

@@ -11,10 +11,6 @@ import java.util.Scanner;
 import java.util.Set;
 import sys.SystemInterface;
 
-/**
- *
- * @author patric
- */
 public class Settings {
     private static Map<String, String> settings;
     private static Set<String> customProperties;
