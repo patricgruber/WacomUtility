@@ -20,16 +20,13 @@ public class Settings {
     private static Set<String> customProperties;
     
     public static void init() {
-        File settings = new File(Constants.DEFAULT_SETTINGS_PATH);
-        if (!settings.exists()) {
-            settings.mkdirs();
+        File settingsFile = new File(Constants.DEFAULT_SETTINGS_FILE);
+        if (!settingsFile.exists()) {
+            new File(Constants.DEFAULT_SETTINGS_PATH).mkdirs();
             saveDefault();
         }
         
-        settings = new File(Constants.DEFAULT_SETTINGS_FILE);
-        if (settings.exists()) {
-            load();
-        }
+        load();
     }
     
     public static String get(String name){
@@ -145,6 +142,8 @@ public class Settings {
         settings.put("Touch", "true");
         settings.put("Area", "0 0 15200 9500");
         settings.put("MapToOutput", "0 0 1920 1080");
+        
+        customProperties = new HashSet<>();
     }
     
     private static void saveDefault() {
