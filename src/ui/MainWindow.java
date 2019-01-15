@@ -84,11 +84,16 @@ public class MainWindow extends javax.swing.JFrame {
         areaWidth.setText(area[2]);
         areaHeight.setText(area[3]);
 
-        final String [] map = Settings.get("MapToOutput").split(" ");
-        mappedX.setText(map[0]);
-        mappedY.setText(map[1]);
-        mappedWidth.setText(map[2]);
-        mappedHeight.setText(map[3]);
+        final String mapToOutput = Settings.get("MapToOutput");
+        final String width = mapToOutput.split("x")[0];
+        final String height = mapToOutput.split("x")[1].split("\\+")[0];
+        final String offsetX = mapToOutput.split("x")[1].split("\\+")[1];
+        final String offsetY = mapToOutput.split("x")[1].split("\\+")[2];
+        
+        mappedX.setText(offsetX);
+        mappedY.setText(offsetY);
+        mappedWidth.setText(width);
+        mappedHeight.setText(height);
 
         final Set<String> customProperties = Settings.getCustomProperties();
         final DefaultTableModel tm = (DefaultTableModel)customPropertyTable.getModel();
@@ -105,7 +110,7 @@ public class MainWindow extends javax.swing.JFrame {
         Settings.set("Touch", touchCB.isSelected()+"");
         Settings.set("Area", areaX.getText()+" "+areaY.getText()+" "
                 +areaWidth.getText()+" "+areaHeight.getText());
-        Settings.set("MapToOutput", mappedX.getText()+" "+mappedY.getText()+" "+mappedWidth.getText()+" "+mappedHeight.getText());
+        Settings.set("MapToOutput", mappedWidth.getText()+"x"+mappedHeight.getText()+"+"+mappedX.getText()+"+"+mappedY.getText());
         
         final DefaultTableModel tm = (DefaultTableModel)customPropertyTable.getModel();        
         for (int i=0;i<tm.getRowCount();i++) {
