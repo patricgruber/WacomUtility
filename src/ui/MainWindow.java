@@ -6,6 +6,7 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
-import sys.SystemInterface;
+import wrapper.Tablet;
+import wrapper.TerminalWrapper;
+import wrapper.WrapperException;
 
 public class MainWindow extends javax.swing.JFrame {
     
@@ -38,13 +41,22 @@ public class MainWindow extends javax.swing.JFrame {
         refreshSettings();
     }
     
+    private String selectedTablet() {
+        return (String)tabletNameCombo.getSelectedItem();
+    }
+    
     private void initTabletNames() {
         tabletNameCombo.removeAllItems();
-        final List<String> tabletNames = SystemInterface.getTabletNames();
-        tabletNames.forEach(name -> 
-                tabletNameCombo.addItem(name));
         
-        if (tabletNames.isEmpty()) {
+        try {
+            TerminalWrapper.getAllTabletNames()
+                    .forEach(tabletName -> tabletNameCombo.addItem(tabletName));
+        } catch (WrapperException e) {
+            System.err.println(e.getMessage());
+            return;
+        }
+        
+        if (tabletNameCombo.getItemCount() == 0) {
             settingsErrorLabel.setText("Not tablets found!");
             settingsErrorLabel.setVisible(true);
             rawSampleSL.setEnabled(false);
@@ -78,47 +90,47 @@ public class MainWindow extends javax.swing.JFrame {
         touchCB.setSelected(Boolean.parseBoolean(Settings.get("Touch")));
         tabletNameCombo.setSelectedItem(Settings.get("TabletName"));
 
-        final String[] area = Settings.get("Area").split(" ");
-        areaX.setText(area[0]);
-        areaY.setText(area[1]);
-        areaWidth.setText(area[2]);
-        areaHeight.setText(area[3]);
-
-        final String mapToOutput = Settings.get("MapToOutput");
-        final String width = mapToOutput.split("x")[0];
-        final String height = mapToOutput.split("x")[1].split("\\+")[0];
-        final String offsetX = mapToOutput.split("x")[1].split("\\+")[1];
-        final String offsetY = mapToOutput.split("x")[1].split("\\+")[2];
+        areaX.setText(Settings.get("AreaXOffset"));
+        areaY.setText(Settings.get("AreaYOffset"));
+        areaWidth.setText(Settings.get("AreaWidth"));
+        areaHeight.setText(Settings.get("AreaHeight"));
         
-        mappedX.setText(offsetX);
-        mappedY.setText(offsetY);
-        mappedWidth.setText(width);
-        mappedHeight.setText(height);
+        mappedX.setText(Settings.get("MappedXOffset"));
+        mappedY.setText(Settings.get("MappedYOffset"));
+        mappedWidth.setText(Settings.get("MappedWidth"));
+        mappedHeight.setText(Settings.get("MappedHeight"));
 
-        final Set<String> customProperties = Settings.getCustomProperties();
+        /*final Set<String> customProperties = Settings.getCustomProperties();
         final DefaultTableModel tm = (DefaultTableModel)customPropertyTable.getModel();
         while (tm.getRowCount()>0) tm.removeRow(0);
 
         customProperties.forEach(prop -> 
-                tm.addRow(new String[]{prop, Settings.get(prop)}));
+                tm.addRow(new String[]{prop, Settings.get(prop)}));*/
     }
     
     private void setSettings() {
         Settings.set("TabletName", (String)tabletNameCombo.getSelectedItem());
         Settings.set("RawSample", rawSampleSL.getValue()+"");
         Settings.set("Suppress", suppressSL.getValue()+"");
-        Settings.set("Touch", touchCB.isSelected()+"");
-        Settings.set("Area", areaX.getText()+" "+areaY.getText()+" "
-                +areaWidth.getText()+" "+areaHeight.getText());
-        Settings.set("MapToOutput", mappedWidth.getText()+"x"+mappedHeight.getText()+"+"+mappedX.getText()+"+"+mappedY.getText());
+        Settings.set("Touch", touchCB.isSelected()?"on":"off");
         
-        final DefaultTableModel tm = (DefaultTableModel)customPropertyTable.getModel();        
+        Settings.set("AreaXOffset", areaX.getText());
+        Settings.set("AreaYOffset", areaY.getText());
+        Settings.set("AreaWidth", areaWidth.getText());
+        Settings.set("AreaHeight", areaHeight.getText());
+        
+        Settings.set("MappedXOffset", mappedX.getText());
+        Settings.set("MappedYOffset", mappedY.getText());
+        Settings.set("MappedWidth", mappedWidth.getText());
+        Settings.set("MappedHeight", mappedHeight.getText());
+        
+        /*final DefaultTableModel tm = (DefaultTableModel)customPropertyTable.getModel();        
         for (int i=0;i<tm.getRowCount();i++) {
             String key = (String)tm.getValueAt(i, 0);
             String val = (String)tm.getValueAt(i, 1);
             if (key.length() == 0 || val.length() == 0) continue;
             Settings.set(key, val);
-        }
+        }*/
     }
 
     /**
@@ -175,6 +187,8 @@ public class MainWindow extends javax.swing.JFrame {
         exitMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        settingsPanel.setFont(settingsPanel.getFont().deriveFont((settingsPanel.getFont().getStyle() & ~java.awt.Font.ITALIC) & ~java.awt.Font.BOLD, 12));
 
         jLabel1.setText("RawSample");
         jLabel1.setToolTipText("Number of raw data used to filter the points");
@@ -467,6 +481,8 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        welcomePanel.setFont(welcomePanel.getFont().deriveFont((welcomePanel.getFont().getStyle() & ~java.awt.Font.ITALIC) & ~java.awt.Font.BOLD, 12));
+
         jLabel3.setFont(new java.awt.Font("Noto Sans", 0, 24)); // NOI18N
         jLabel3.setText("Welcome to the Wacom Utility for Linux!");
 
@@ -508,6 +524,8 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addContainerGap(178, Short.MAX_VALUE))
         );
+
+        jMenuBar1.setFont(jMenuBar1.getFont().deriveFont((jMenuBar1.getFont().getStyle() & ~java.awt.Font.ITALIC) & ~java.awt.Font.BOLD, 12));
 
         jMenu1.setText("View");
 
@@ -633,7 +651,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_customPropertyAddActionPerformed
 
     private void touchCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_touchCBActionPerformed
-        Settings.set("Touch", ""+touchCB.isSelected());
+        Settings.set("Touch", touchCB.isSelected()?"on":"off");
     }//GEN-LAST:event_touchCBActionPerformed
 
     private void textFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldKeyPressed
@@ -662,29 +680,18 @@ public class MainWindow extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainWindow().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MainWindow().setVisible(true);
         });
     }
 
