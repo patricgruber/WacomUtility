@@ -19,6 +19,7 @@ public class Settings {
         File settingsFile = new File(Constants.DEFAULT_SETTINGS_FILE);
         if (!settingsFile.exists()) {
             new File(Constants.DEFAULT_SETTINGS_PATH).mkdirs();
+            saveDefault();
         }
         
         load();
@@ -129,6 +130,33 @@ public class Settings {
         }
     }
     
+    private static void saveDefault() {
+        createDefaults();
+        save();
+    }
+    
+    private static void createDefaults() {
+        settings = new HashMap<>();
+        
+        settings.put("AreaXOffset", "0");
+        settings.put("AreaYOffset", "0");
+        settings.put("AreaWidth", "15200");
+        settings.put("AreaHeight", "9800");
+        
+        settings.put("Touch", "off");
+        settings.put("Suppress", "0");
+        settings.put("RawSample", "1");
+        
+        settings.put("MappedXOffset", "0");
+        settings.put("MappedYOffset", "0");
+        settings.put("MappedWidth", "1920");
+        settings.put("MappedHeight", "1080");
+        
+        settings.put("TabletName", "Wacom Intuos S Pen stylus");
+        
+        customProperties = new HashSet<>();
+    }
+    
     public static void apply() {
         final String name = settings.get("TabletName");
         final Tablet tablet = new Tablet(name);
@@ -180,6 +208,12 @@ public class Settings {
         if (touch != null) {
             tablet.setTouch(touch.equals("on"));
         }
+        
+        customProperties.stream()
+                .filter((key) -> (settings.containsKey(key)))
+                .forEach((key) -> {
+                    tablet.setCustom(key,settings.get(key));
+                });
         
         System.out.println();
     }    
