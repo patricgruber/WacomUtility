@@ -10,8 +10,8 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.event.DocumentEvent;
 import javax.swing.table.DefaultTableModel;
 import wrapper.Tablet;
 import wrapper.TerminalWrapper;
@@ -39,6 +39,22 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
         initTabletNames();
         
         refreshSettings();
+        
+        areaX.getDocument().addDocumentListener(
+                (SimpleDocumentListener) (DocumentEvent e) -> {handleAreaChanged();}
+        );
+        
+        areaY.getDocument().addDocumentListener(
+                (SimpleDocumentListener) (DocumentEvent e) -> {handleAreaChanged();}
+        );
+        
+        areaWidth.getDocument().addDocumentListener(
+                (SimpleDocumentListener) (DocumentEvent e) -> {handleAreaChanged();}
+        );
+        
+        areaHeight.getDocument().addDocumentListener(
+                (SimpleDocumentListener) (DocumentEvent e) -> {handleAreaChanged();}
+        );
         
         final int areaX = Integer.parseInt(Settings.get("AreaXOffset"));
         final int areaY = Integer.parseInt(Settings.get("AreaYOffset"));
@@ -170,6 +186,11 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        welcomePanel = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         settingsPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         rawSampleSL = new javax.swing.JSlider();
@@ -202,11 +223,7 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel12 = new javax.swing.JLabel();
         tabletAreaPanel1 = new ui.TabletAreaPanel();
-        welcomePanel = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        fullAreaBtn = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         welcomeMenuItem = new javax.swing.JMenuItem();
@@ -325,62 +342,21 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
         jLabel8.setToolTipText("The tablet area");
 
         areaWidth.setToolTipText("Width");
-        areaWidth.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                textFieldKeyPressed(evt);
-            }
-        });
 
         areaHeight.setToolTipText("Height");
-        areaHeight.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                textFieldKeyPressed(evt);
-            }
-        });
 
         areaX.setToolTipText("top left x");
-        areaX.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                textFieldKeyPressed(evt);
-            }
-        });
 
         areaY.setToolTipText("top left y");
-        areaY.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                textFieldKeyPressed(evt);
-            }
-        });
 
         jLabel9.setText("MapTo");
         jLabel9.setToolTipText("The box on the screen the tablet area should be mapped to");
 
         mappedWidth.setToolTipText("Width");
-        mappedWidth.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                textFieldKeyPressed(evt);
-            }
-        });
-
-        mappedHeight.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                textFieldKeyPressed(evt);
-            }
-        });
 
         mappedX.setToolTipText("top left x");
-        mappedX.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                textFieldKeyPressed(evt);
-            }
-        });
 
         mappedY.setToolTipText("top left y");
-        mappedY.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                textFieldKeyPressed(evt);
-            }
-        });
 
         jLabel10.setText("in tablet coordinates");
 
@@ -435,8 +411,15 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
         );
         tabletAreaPanel1Layout.setVerticalGroup(
             tabletAreaPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
+
+        fullAreaBtn.setText("Full Area");
+        fullAreaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fullAreaBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout settingsPanelLayout = new javax.swing.GroupLayout(settingsPanel);
         settingsPanel.setLayout(settingsPanelLayout);
@@ -503,7 +486,8 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel10)
-                                        .addComponent(jLabel11)))))
+                                        .addComponent(jLabel11))))
+                            .addComponent(fullAreaBtn))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tabletAreaPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -512,7 +496,7 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(settingsPanelLayout.createSequentialGroup()
                         .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
@@ -550,16 +534,18 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
                                 .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(mappedWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(mappedHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11)))))
-                    .addComponent(tabletAreaPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel11))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fullAreaBtn))
+                    .addComponent(tabletAreaPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(customPropertyAdd)
                     .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(settingsSaveBtn)
@@ -689,20 +675,7 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
     private void touchCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_touchCBActionPerformed
         Settings.set("Touch", touchCB.isSelected()?"on":"off");
     }//GEN-LAST:event_touchCBActionPerformed
-
-    private void textFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldKeyPressed
-        final JTextField src = (JTextField)evt.getSource();
-        if (Character.isLetterOrDigit(evt.getKeyChar())) {
-            final String text = src.getText()+evt.getKeyChar();
-            try {
-                Integer.parseInt(text);
-                src.setForeground(null);
-            } catch (NumberFormatException ne) {
-                src.setForeground(Color.RED);
-            }
-        }
-    }//GEN-LAST:event_textFieldKeyPressed
-
+    
     private void helpMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpMenuItemActionPerformed
        if (Desktop.isDesktopSupported())
            try {
@@ -711,6 +684,48 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
        } catch (URISyntaxException | IOException ex) {}
     }//GEN-LAST:event_helpMenuItemActionPerformed
 
+    private void fullAreaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullAreaBtnActionPerformed
+        tabletAreaPanel1.setFullArea();
+    }//GEN-LAST:event_fullAreaBtnActionPerformed
+
+    private void handleAreaChanged() {
+        int x, y, width, height;
+        
+        try {
+            x = Integer.parseInt(areaX.getText());
+            areaX.setForeground(Color.black);
+        } catch (NumberFormatException ne) {
+            areaX.setForeground(Color.red);
+            return;
+        }
+        
+        try {
+            y = Integer.parseInt(areaY.getText());
+            areaY.setForeground(Color.black);
+        } catch (NumberFormatException ne) {
+            areaY.setForeground(Color.red);
+            return;
+        }
+                
+        try {
+            width = Integer.parseInt(areaWidth.getText());
+            areaWidth.setForeground(Color.black);
+        } catch (NumberFormatException ne) {
+            areaWidth.setForeground(Color.red);
+            return;
+        }
+                        
+        try {
+            height = Integer.parseInt(areaHeight.getText());
+            areaHeight.setForeground(Color.black);
+        } catch (NumberFormatException ne) {
+            areaHeight.setForeground(Color.red);
+            return;
+        }
+        
+        tabletAreaPanel1.setNewArea(x,y,width,height);
+    }
+    
     
     /**
      * @param args the command line arguments
@@ -720,6 +735,7 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            System.err.println("Couldn't set system look and feel");
         }
         //</editor-fold>
         
@@ -739,6 +755,7 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
     private javax.swing.JButton customPropertyAdd;
     private javax.swing.JTable customPropertyTable;
     private javax.swing.JMenuItem exitMenuItem;
+    private javax.swing.JButton fullAreaBtn;
     private javax.swing.JMenuItem helpMenuItem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
