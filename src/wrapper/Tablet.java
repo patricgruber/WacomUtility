@@ -109,4 +109,8 @@ public class Tablet {
         final String value = get("Touch").orElse("off");
         return value.equals("on");
     }
+    
+    public void setCustom(final String property, final String value) {
+        set(property, value);
+    }
 }
