@@ -407,7 +407,7 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
         tabletAreaPanel1.setLayout(tabletAreaPanel1Layout);
         tabletAreaPanel1Layout.setHorizontalGroup(
             tabletAreaPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 370, Short.MAX_VALUE)
+            .addGap(0, 442, Short.MAX_VALUE)
         );
         tabletAreaPanel1Layout.setVerticalGroup(
             tabletAreaPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -441,8 +441,7 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
                     .addGroup(settingsPanelLayout.createSequentialGroup()
                         .addComponent(customPropertyAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel12)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jLabel12))
                     .addGroup(settingsPanelLayout.createSequentialGroup()
                         .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(touchCB)
@@ -489,7 +488,7 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
                                         .addComponent(jLabel11))))
                             .addComponent(fullAreaBtn))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tabletAreaPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(tabletAreaPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         settingsPanelLayout.setVerticalGroup(
