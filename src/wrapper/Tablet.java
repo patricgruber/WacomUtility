@@ -1,5 +1,7 @@
 package wrapper;
 
+import java.util.Optional;
+
 /**
  * @author patric
  */
@@ -23,13 +25,25 @@ public class Tablet {
         }
     }
     
-    private String get(final String property) {
+    private Optional<String> get(final String property) {
         try {
-            return TerminalWrapper.get(name, property);
+            return Optional.of(TerminalWrapper.get(name, property));
         } catch(WrapperException e) {
             System.out.println(e.getMessage());
+            return Optional.empty();
         }
-        return "";
+    }
+    
+    public String getAreaString() {
+        return get("Area").orElse("0 0 0 0");
+    }
+    
+    public String getMaxAreaString() {
+        String currArea = getAreaString();
+        set("ResetArea", "");
+        String maxArea = getAreaString();
+        set("Area", currArea);
+        return maxArea;
     }
     
     public void setArea(final int xOffset, final int yOffset, final int width, final int height) {
@@ -38,22 +52,22 @@ public class Tablet {
     }
     
     public int getAreaXOffset() {
-        String area = get("Area");
+        String area = getAreaString();
         return Integer.parseInt(area.split(" ")[0]);
     }
     
     public int getAreaYOffset() {
-        String area = get("Area");
+        String area = getAreaString();
         return Integer.parseInt(area.split(" ")[1]);
     }
     
     public int getAreaWidth() {
-        String area = get("Area");
+        String area = getAreaString();
         return Integer.parseInt(area.split(" ")[2]);
     }
     
     public int getAreaHeight() {
-        String area = get("Area");
+        String area = getAreaString();
         return Integer.parseInt(area.split(" ")[3]);
     }
     
@@ -62,7 +76,7 @@ public class Tablet {
     }
     
     public int getSuppress() {
-        return Integer.parseInt(get("Suppress"));
+        return Integer.parseInt(get("Suppress").orElse("0"));
     }
     
     public void setRawSample(final int rawSample) {
@@ -70,7 +84,7 @@ public class Tablet {
     }
     
     public int getRawSample() {
-        return Integer.parseInt(get("RawSample"));
+        return Integer.parseInt(get("RawSample").orElse("1"));
     }
     
     public void setThreshold(final int threshold) {
@@ -78,9 +92,9 @@ public class Tablet {
     }
     
     public int getThreshold() { 
-        return Integer.parseInt(get("Threshold"));
+        return Integer.parseInt(get("Threshold").orElse("27"));
     }
-    
+     
     public void setMapToOutput(final int xOffset, final int yOffset, final int width, final int height) {
         final String mapped = width+"x"+height+"+"+xOffset+"+"+yOffset;
         set("MapToOuput", mapped);
@@ -92,12 +106,7 @@ public class Tablet {
     }
     
     public boolean getTouch() {
-        final String value = get("Touch");
+        final String value = get("Touch").orElse("off");
         return value.equals("on");
-    }
-    
-    @Override
-    public String toString() {
-        return name;
     }
 }
