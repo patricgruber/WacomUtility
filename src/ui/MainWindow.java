@@ -9,6 +9,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
@@ -128,12 +129,13 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
         mappedWidth.setText(Settings.get("MappedWidth"));
         mappedHeight.setText(Settings.get("MappedHeight"));
 
-        /*final Set<String> customProperties = Settings.getCustomProperties();
+        final Set<String> customProperties = Settings.getCustomProperties();
         final DefaultTableModel tm = (DefaultTableModel)customPropertyTable.getModel();
         while (tm.getRowCount()>0) tm.removeRow(0);
 
         customProperties.forEach(prop -> 
-                tm.addRow(new String[]{prop, Settings.get(prop)}));*/
+                tm.addRow(new String[]{prop, Settings.get(prop)}));
+        
     }
     
     private void setSettings() {
@@ -724,8 +726,7 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
         
         tabletAreaPanel1.setNewArea(x,y,width,height);
     }
-    
-    
+        
     /**
      * @param args the command line arguments
      */
