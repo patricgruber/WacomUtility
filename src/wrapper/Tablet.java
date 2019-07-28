@@ -97,7 +97,7 @@ public class Tablet {
      
     public void setMapToOutput(final int xOffset, final int yOffset, final int width, final int height) {
         final String mapped = width+"x"+height+"+"+xOffset+"+"+yOffset;
-        set("MapToOuput", mapped);
+        set("MapToOutput", mapped);
     }
     
     public void setTouch(final boolean activated) {
