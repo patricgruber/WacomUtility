@@ -31,7 +31,8 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
         
         panels = Arrays.asList(settingsPanel, welcomePanel);
         hideAllPanels();
-        welcomePanel.setVisible(true);
+        //welcomePanel.setVisible(true);
+        settingsPanel.setVisible(true);
         Settings.init();
         Settings.load();
         
@@ -213,6 +214,50 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
         helpMenuItem = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         exitMenuItem = new javax.swing.JMenuItem();
+
+        welcomePanel.setFont(welcomePanel.getFont().deriveFont((welcomePanel.getFont().getStyle() & ~java.awt.Font.ITALIC) & ~java.awt.Font.BOLD, 12));
+
+        jLabel3.setFont(new java.awt.Font("Noto Sans", 0, 24)); // NOI18N
+        jLabel3.setText("Welcome to the Wacom Utility for Linux!");
+
+        jLabel4.setText("If you want to contribute, visit the GitHub page: ");
+
+        jLabel5.setText("github.com/TheGuy2112/WacomUtility");
+
+        jLabel6.setText("This is still in pre-alpha and only supports a little amount of features. ");
+
+        javax.swing.GroupLayout welcomePanelLayout = new javax.swing.GroupLayout(welcomePanel);
+        welcomePanel.setLayout(welcomePanelLayout);
+        welcomePanelLayout.setHorizontalGroup(
+            welcomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(welcomePanelLayout.createSequentialGroup()
+                .addGroup(welcomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(welcomePanelLayout.createSequentialGroup()
+                        .addGap(233, 233, 233)
+                        .addComponent(jLabel4))
+                    .addGroup(welcomePanelLayout.createSequentialGroup()
+                        .addGap(260, 260, 260)
+                        .addComponent(jLabel5))
+                    .addGroup(welcomePanelLayout.createSequentialGroup()
+                        .addGap(169, 169, 169)
+                        .addGroup(welcomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel3))))
+                .addContainerGap(204, Short.MAX_VALUE))
+        );
+        welcomePanelLayout.setVerticalGroup(
+            welcomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(welcomePanelLayout.createSequentialGroup()
+                .addGap(84, 84, 84)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addGap(177, 177, 177)
+                .addComponent(jLabel6)
+                .addContainerGap(178, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -524,50 +569,6 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
                 .addContainerGap())
         );
 
-        welcomePanel.setFont(welcomePanel.getFont().deriveFont((welcomePanel.getFont().getStyle() & ~java.awt.Font.ITALIC) & ~java.awt.Font.BOLD, 12));
-
-        jLabel3.setFont(new java.awt.Font("Noto Sans", 0, 24)); // NOI18N
-        jLabel3.setText("Welcome to the Wacom Utility for Linux!");
-
-        jLabel4.setText("If you want to contribute, visit the GitHub page: ");
-
-        jLabel5.setText("github.com/TheGuy2112/WacomUtility");
-
-        jLabel6.setText("This is still in pre-alpha and only supports a little amount of features. ");
-
-        javax.swing.GroupLayout welcomePanelLayout = new javax.swing.GroupLayout(welcomePanel);
-        welcomePanel.setLayout(welcomePanelLayout);
-        welcomePanelLayout.setHorizontalGroup(
-            welcomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(welcomePanelLayout.createSequentialGroup()
-                .addGroup(welcomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(welcomePanelLayout.createSequentialGroup()
-                        .addGap(233, 233, 233)
-                        .addComponent(jLabel4))
-                    .addGroup(welcomePanelLayout.createSequentialGroup()
-                        .addGap(260, 260, 260)
-                        .addComponent(jLabel5))
-                    .addGroup(welcomePanelLayout.createSequentialGroup()
-                        .addGap(169, 169, 169)
-                        .addGroup(welcomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel3))))
-                .addContainerGap(204, Short.MAX_VALUE))
-        );
-        welcomePanelLayout.setVerticalGroup(
-            welcomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(welcomePanelLayout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
-                .addGap(177, 177, 177)
-                .addComponent(jLabel6)
-                .addContainerGap(178, Short.MAX_VALUE))
-        );
-
         jMenuBar1.setFont(jMenuBar1.getFont().deriveFont((jMenuBar1.getFont().getStyle() & ~java.awt.Font.ITALIC) & ~java.awt.Font.BOLD, 12));
 
         jMenu1.setText("View");
@@ -614,18 +615,10 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(settingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(welcomePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(settingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(welcomePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
@@ -641,8 +634,8 @@ public class MainWindow extends javax.swing.JFrame implements IAreaUpdateable {
     }//GEN-LAST:event_settingsMenuItemActionPerformed
 
     private void welcomeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_welcomeMenuItemActionPerformed
-        hideAllPanels();
-        welcomePanel.setVisible(true);
+        //hideAllPanels();
+        //welcomePanel.setVisible(true);
     }//GEN-LAST:event_welcomeMenuItemActionPerformed
 
     private void settingsApplyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsApplyBtnActionPerformed
