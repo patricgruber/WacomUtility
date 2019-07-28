@@ -33,13 +33,13 @@ You can try the following settings, but it is not guaranteed that they'll work f
 | Area | Grip | RawSample | Suppress |
 | ---- | ---- | --------- | -------- |
 | Full Area | Dragging | 1 | 0 |
-| Full Area | Hovering | 1/2 | 1/0 |
+| Full Area | Hovering | 1 or 2 | 1 or 0 |
 | Half Area | Dragging | 1 | 1 |
-| Half Area | Hovering | 1/2 | 1/1 |
-| Small Area | Dragging | 2/3 | 2/1 |
+| Half Area | Hovering | 1 or 2 | 1 or 1 |
+| Small Area | Dragging | 2 or 3 | 2 or 1 |
 | Small Area | Hovering | 4 | 2 |
 
 # Tested with
-* __OS__: Manjaro Linux 64bit
-* __Desktop Environment__: Gnome 3.28.2
-* __Java__: OpenJDK 8
+* __OS__: Arch Linux 64bit
+* __Desktop Environment__: i3
+* __Java__: OpenJDK 12
